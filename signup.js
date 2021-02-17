@@ -9,6 +9,8 @@ const client = new CognitoIdentityProvider({region: 'us-west-2'});
 
 async function signup(user, pass, cliendid) {
     try {
+        console.log('aaa');
+
         const res = await client.signUp({
             ClientId: cliendid,
             Username: user,

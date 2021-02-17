@@ -2,10 +2,10 @@
 
 aws cognito-idp list-users \
 	--user-pool-id us-west-2_3VlT2SQUS \
-	--query Users[].Username \
-	--max-items 2
-#[--attributes-to-get <value>]
-#[--filter <value>]
+	--filter "username = \"user2\""    \
+	--query Users[].Username
+
+#	--attributes-to-get "username" \
 #[--cli-input-json | --cli-input-yaml]
 #[--starting-token <value>]
 #[--page-size <value>]

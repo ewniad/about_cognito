@@ -3,18 +3,22 @@ import {
    InitiateAuthCommand,
    SignUpCommand
 } from "@aws-sdk/client-cognito-identity-provider";
-
+import { fileURLToPath } from "url";
 
 const client = new CognitoIdentityProvider({region: 'us-west-2'});
 
 async function signup(user, pass, cliendid) {
     try {
-        console.log('aaa');
-
         const res = await client.signUp({
             ClientId: cliendid,
             Username: user,
-            Password: pass
+            Password: pass,
+            UserAttributes: [
+                {
+                    Name: 'email',
+                    Value: 'eijirou.wakabayashi@unictgroup.com'
+                }
+            ]
         });
         console.log(res);
     } catch(err) {
@@ -23,7 +27,4 @@ async function signup(user, pass, cliendid) {
     }
 }
 
-
 export { signup };
-
-

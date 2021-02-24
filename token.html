@@ -1,0 +1,25 @@
+<html>
+    <body>
+        <p>this is token.html</p>
+        <p>レスポンス:</p>
+        <p id="response"></p>
+    </body>
+    <script>
+const hash = window.location.hash;
+const token = hash.replace(/&.*/, '').replace(/#id_token=/, '');
+
+const xhr = new XMLHttpRequest();
+
+const url = 'https://i6hg24dmtg.execute-api.us-west-2.amazonaws.com/stage1';
+
+xhr.open('GET', url);
+xhr.setRequestHeader('Authorization', token);
+xhr.addEventListener('load', function(e) {
+    console.log(xhr.response);
+    const p = document.querySelector("#response");
+    p.innerHTML = xhr.response;
+});
+xhr.send();
+    </script>
+
+</html>

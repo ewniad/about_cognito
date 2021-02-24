@@ -2,13 +2,29 @@ const { createServer } = require('http');
 const querystring = require('querystring');
 const fs = require('fs');
 const path = require('path');
+const { isReturnStatement } = require('typescript');
 
 const server = createServer((req, res) => {
-
-    let filePath = '.' + req.url;
-    if (filePath == './') {
-        filePath = './index.html';
+    if (req.url === '/favicon.ico') {
+        return;
     }
+
+    let filePath;
+
+    switch (req.url) {
+    case '/':
+        filePath = './index.html';
+        break;
+    case '/token':
+    case '/token/':
+        filePath = './token.html';
+        break;
+    default:
+        filePath = '.' + req.url;
+    }
+
+    console.log('req.url = ' + req.url);
+    console.log('filePath = ' + filePath);
 
     const extname = String(path.extname(filePath)).toLowerCase();
     const mimeTypes = {
@@ -22,6 +38,7 @@ const server = createServer((req, res) => {
     fs.readFile(filePath, function(error, content) {
         if (error) {
             console.log(error);
+            res.end('そんなファイルはない。');
         }
         else {
             res.writeHead(200, {
